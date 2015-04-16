@@ -1,8 +1,21 @@
 #ifdef WA
-WA(1)
-WA(21) WA(311) WA(312) WA(313)
-WA(22) WA(321) WA(322) WA(323)
-WA(23) WA(331) WA(332) WA(333)
+// action	left				right				EQUAL	LESS	GREATER
+WA(1,		A|B|C|D|0|0|0|0|0|0|0|0,	0|0|0|0|E|F|G|H|0|0|0|0,	WA_21,	WA_22,	WA_23	)
+
+WA(21,		A|0|0|0|0|0|0|0|I|0|0|0,	0|0|0|0|0|0|0|0|0|J|K|0,	WA_311,	WA_312,	WA_313	)
+WA(311,		A|0|0|0|0|0|0|0|0|0|0|0,	0|0|0|0|0|0|0|0|0|0|0|L,	WA_X,	WA_LH,	WA_LL	)
+WA(312,		0|0|0|0|0|0|0|0|0|J|0|0,	0|0|0|0|0|0|0|0|0|0|K|0,	WA_IL,	WA_KH,	WA_JH	)
+WA(313,		0|0|0|0|0|0|0|0|0|J|0|0,	0|0|0|0|0|0|0|0|0|0|K|0,	WA_IH,	WA_JL,	WA_JL	)
+
+WA(22,		A|B|0|0|E|0|0|0|0|0|0|0,	0|0|C|0|0|F|0|0|0|0|0|L,	WA_321,	WA_322,	WA_323	)
+WA(321,		0|0|0|0|0|0|G|0|0|0|0|0,	0|0|0|0|0|0|0|H|0|0|0|0,	WA_DH,	WA_GL,	WA_HL	)
+WA(322,		0|0|C|0|0|0|0|0|0|0|0|0,	0|0|0|0|0|0|0|0|0|0|0|L,	WA_EL,	WA_X,	WA_CH	)
+WA(323,		A|0|0|0|0|0|0|0|0|0|0|0,	0|B|0|0|0|0|0|0|0|0|0|0,	WA_FL,	WA_BH,	WA_AH	)
+
+WA(23,		A|B|0|0|E|0|0|0|0|0|0|0,	0|0|C|0|0|F|0|0|0|0|0|L,	WA_331,	WA_332,	WA_333	)
+WA(331,		0|0|0|0|0|0|G|0|0|0|0|0,	0|0|0|0|0|0|0|H|0|0|0|0,	WA_DL,	WA_HH,	WA_GH	)
+WA(332,		A|0|0|0|0|0|0|0|0|0|0|0,	0|B|0|0|0|0|0|0|0|0|0|0,	WA_FH,	WA_AL,	WA_AH	)
+WA(333,		0|0|C|0|0|0|0|0|0|0|0|0,	0|0|0|0|0|0|0|0|0|0|0|L,	WA_EH,	WA_CL,	WA_X	)
 #undef WA
 #else
 
@@ -22,13 +35,8 @@ WA(23) WA(331) WA(332) WA(333)
 typedef unsigned int 	COINS;
 
 typedef enum {
-	WEIGHRESULT_EQUAL, WEIGHRESULT_LESS, WEIGHRESULT_GREATER,
-	WEIGHRESULT_COUNT
-} WEIGHRESULT;
-
-typedef enum {
 	// Weighings
-	#define WA(x)	WA_##x,
+	#define WA(a,l,r,eq,le,gr)	WA_##a,
 	#include "Coins12.c"
 
 	// Results H=heavy, L=light
@@ -47,6 +55,11 @@ typedef enum {
 	WA_LH, WA_LL,
 } WEIGHACTION;
 
+typedef enum {
+	WEIGHRESULT_EQUAL, WEIGHRESULT_LESS, WEIGHRESULT_GREATER,
+	WEIGHRESULT_COUNT
+} WEIGHRESULT;
+
 typedef struct {
 	COINS		left;
 	COINS		right;
@@ -54,25 +67,8 @@ typedef struct {
 } WEIGHENTRY;
 
 static const WEIGHENTRY weighTable[] = {
-	//		left				right				EQUAL	LESS	GREATER
-	//		A B C D E F G H I J K L		A B C D E F G H I J K L
-
-	{/*WA_1*/	A|B|C|D|0|0|0|0|0|0|0|0,	0|0|0|0|E|F|G|H|0|0|0|0,	WA_21,	WA_22,	WA_23	},
-
-	{/*WA_21*/	A|0|0|0|0|0|0|0|I|0|0|0,	0|0|0|0|0|0|0|0|0|J|K|0,	WA_311,	WA_312,	WA_313	},
-	{/*WA_311*/	A|0|0|0|0|0|0|0|0|0|0|0,	0|0|0|0|0|0|0|0|0|0|0|L,	WA_X,	WA_LH,	WA_LL	},
-	{/*WA_312*/	0|0|0|0|0|0|0|0|0|J|0|0,	0|0|0|0|0|0|0|0|0|0|K|0,	WA_IL,	WA_KH,	WA_JH	},
-	{/*WA_313*/	0|0|0|0|0|0|0|0|0|J|0|0,	0|0|0|0|0|0|0|0|0|0|K|0,	WA_IH,	WA_JL,	WA_JL	},
-
-	{/*WA_22*/	A|B|0|0|E|0|0|0|0|0|0|0,	0|0|C|0|0|F|0|0|0|0|0|L,	WA_321,	WA_322,	WA_323	},
-	{/*WA_321*/	0|0|0|0|0|0|G|0|0|0|0|0,	0|0|0|0|0|0|0|H|0|0|0|0,	WA_DH,	WA_GL,	WA_HL	},
-	{/*WA_322*/	0|0|C|0|0|0|0|0|0|0|0|0,	0|0|0|0|0|0|0|0|0|0|0|L,	WA_EL,	WA_X,	WA_CH	},
-	{/*WA_323*/	A|0|0|0|0|0|0|0|0|0|0|0,	0|B|0|0|0|0|0|0|0|0|0|0,	WA_FL,	WA_BH,	WA_AH	},
-
-	{/*WA_23*/	A|B|0|0|E|0|0|0|0|0|0|0,	0|0|C|0|0|F|0|0|0|0|0|L,	WA_331,	WA_332,	WA_333	},
-	{/*WA_331*/	0|0|0|0|0|0|G|0|0|0|0|0,	0|0|0|0|0|0|0|H|0|0|0|0,	WA_DL,	WA_HH,	WA_GH	},
-	{/*WA_332*/	A|0|0|0|0|0|0|0|0|0|0|0,	0|B|0|0|0|0|0|0|0|0|0|0,	WA_FH,	WA_AL,	WA_AH	},
-	{/*WA_333*/	0|0|C|0|0|0|0|0|0|0|0|0,	0|0|0|0|0|0|0|0|0|0|0|L,	WA_EH,	WA_CL,	WA_X	},
+	#define WA(a,l,r,eq,le,gr)	{ WA_##a, l, r, eq, le, gr },
+	#include "Coins12.c"
 };
 
 // Weigh and return WEIGHRESULT_xxx
@@ -81,8 +77,8 @@ typedef WEIGHRESULT (*Weigh)(COINS left, COINS right)
 WEIGHRESULT Solve(Weigh weigh)
 {
 	WEIGHACTION	wa = WA_1;
-	wa = weighTable[wa].result[weigh(weighTable[wa].left, weighTable[wa].right)];
-	wa = weighTable[wa].result[weigh(weighTable[wa].left, weighTable[wa].right)];
-	return weigh(weighTable[wa].left, weighTable[wa].right);
+	wa = weighTable[wa].result[ weigh( weighTable[wa].left, weighTable[wa].right ) ];
+	wa = weighTable[wa].result[ weigh( weighTable[wa].left, weighTable[wa].right ) ];
+	return                      weigh( weighTable[wa].left, weighTable[wa].right );
 }
 #endif // WA
