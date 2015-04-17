@@ -67,8 +67,8 @@ typedef struct {
 } WEIGHENTRY;
 
 static const WEIGHENTRY weighTable[] = {
-	#define WA(a,l,r,eq,le,gr)	{ WA_##a, l, r, eq, le, gr },
-	#include "Coins12.c"
+	#define WA(a,l,r,eq,le,gr)	{ l, r, { eq, le, gr } },
+	#include "wa.h"
 };
 
 // Weigh and return WEIGHRESULT_xxx
