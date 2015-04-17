@@ -74,11 +74,11 @@ static const WEIGHENTRY weighTable[] = {
 // Weigh and return WEIGHRESULT_xxx
 typedef WEIGHRESULT (*Weigh)(COINS left, COINS right)
 
-WEIGHRESULT Solve(Weigh weigh)
+WEIGHACTION Solve(Weigh weigh)
 {
 	WEIGHACTION	wa = WA_1;
 	wa = weighTable[wa].result[ weigh( weighTable[wa].left, weighTable[wa].right ) ];
 	wa = weighTable[wa].result[ weigh( weighTable[wa].left, weighTable[wa].right ) ];
-	return                      weigh( weighTable[wa].left, weighTable[wa].right );
+	return weighTable[wa].result [ weigh( weighTable[wa].left, weighTable[wa].right ) ] ;
 }
 #endif // WA
